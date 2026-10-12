@@ -704,15 +704,12 @@
 .memories-section {
   background-color: #fae9ec;
   background-image:
-    radial-gradient(ellipse at 13% 17%, rgba(255,255,255,.87), transparent 27%),
-    radial-gradient(ellipse at 88% 24%, rgba(255,198,215,.54), transparent 32%),
-    radial-gradient(ellipse at 49% 80%, rgba(255,234,207,.62), transparent 42%),
-    linear-gradient(126deg, rgba(255,247,243,.56), rgba(247,230,248,.6)),
-    repeating-linear-gradient(115deg, transparent 0 42px, rgba(255,255,255,.2) 44px 47px, transparent 51px 83px),
-    linear-gradient(145deg, rgba(253,233,239,.79) 0%, rgba(255,240,236,.76) 52%, rgba(244,234,250,.8) 100%),
+    linear-gradient(145deg, rgba(255,249,246,.24), rgba(247,230,248,.19)),
     url("romantic-backdrop.jpg");
-}
-.memories-section::before { opacity: .24; background-size: 31px 31px; }
+  background-position: center, center;
+  background-size: cover, cover;
+  background-repeat: no-repeat, no-repeat;
+}.memories-section::before { opacity: .24; background-size: 31px 31px; }
 .photo-card.has-photo .photo-window { animation: memoryPhotoGlow 6s ease-in-out infinite, photoArrive 1s cubic-bezier(.18,.78,.25,1) both; }
 .photo-card.has-photo:nth-child(2n) .photo-window { animation-delay: .15s, .12s; }
 .photo-card.has-photo:nth-child(3n) .photo-window { animation-delay: .3s, .24s; }

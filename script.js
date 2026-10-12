@@ -1,50 +1,6 @@
 (() => {
       const gateScreen = document.getElementById('gate-screen');
       const birthdaySite = document.getElementById('birthday-site');
-      const openingLock = document.getElementById('opening-lock');
-      const lockStatus = document.getElementById('lock-status');
-      const unlockDate = new Date(0);
-      const countdownNodes = {
-        days: document.getElementById('count-days'),
-        hours: document.getElementById('count-hours'),
-        minutes: document.getElementById('count-minutes'),
-        seconds: document.getElementById('count-seconds')
-      };
-      let countdownTimer = 0;
-
-      function updateOpeningLock() {
-        const secondsLeft = Math.max(0, Math.ceil((unlockDate.getTime() - Date.now()) / 1000));
-        if (secondsLeft === 0) {
-          window.clearInterval(countdownTimer);
-          openingLock.hidden = true;
-          gateScreen.hidden = false;
-          gateScreen.setAttribute('aria-hidden', 'false');
-          gateScreen.classList.add('gate-unlocked');
-          lockStatus.textContent = 'It’s time… your little birthday story is ready ♡';
-          return false;
-        }
-
-        const values = {
-          days: Math.floor(secondsLeft / 86400),
-          hours: Math.floor((secondsLeft % 86400) / 3600),
-          minutes: Math.floor((secondsLeft % 3600) / 60),
-          seconds: secondsLeft % 60
-        };
-        Object.entries(values).forEach(([unit, value]) => {
-          const nextValue = String(value).padStart(2, '0');
-          const node = countdownNodes[unit];
-          if (node.textContent !== nextValue) {
-            node.textContent = nextValue;
-            node.classList.remove('count-tick');
-            void node.offsetWidth;
-            node.classList.add('count-tick');
-          }
-        });
-        return true;
-      }
-
-      if (updateOpeningLock()) countdownTimer = window.setInterval(updateOpeningLock, 1000);
-
       const gateTitle = document.getElementById('gate-title');
       const gateCopy = document.getElementById('gate-copy');
       const gateMascot = document.getElementById('gate-mascot');
@@ -496,7 +452,25 @@
         'May you feel proud of the person you are becoming, Aditi.',
         'May your days hold soft mornings, kind people, and all your favorite treats.',
         'May the smile you give everyone find its way back to you a hundred times over.',
-        'May life surprise you with beautiful little moments when you least expect them.'
+        'May life surprise you with beautiful little moments when you least expect them.',
+        'May your favorite song always find you at exactly the right time.',
+        'May you have brave little beginnings and gentle places to land.',
+        'May there always be someone who listens when you have a story to tell.',
+        'May your camera roll fill up with days you want to remember.',
+        'May the things you work hard for feel worth the wait.',
+        'May you find magic in ordinary afternoons and cozy evenings.',
+        'May your heart feel safe, understood, and free to be exactly itself.',
+        'May you get extra dessert, extra sleep, and extra reasons to grin.',
+        'May your next adventure bring a view that makes you stop and stare.',
+        'May you keep discovering little things that make you unmistakably you.',
+        'May good news find its way to your doorstep more often this year.',
+        'May you be as kind to yourself as you are to the people around you.',
+        'May your favorite people show up with warmth, laughter, and snacks.',
+        'May every new page of your story hold something lovely.',
+        'May you always remember how much light you bring into the room.',
+        'May the year ahead surprise you in all the sweetest ways.',
+        'May you feel celebrated today, and cared for on all the ordinary days too.',
+        'And one last wish: may your smile stay close, wherever this year takes you. ♡'
       ];
       let wishIndex = 0;
       document.getElementById('next-wish').addEventListener('click', () => {
@@ -504,7 +478,7 @@
         const message = document.getElementById('wish-message');
         message.classList.remove('wish-changing');
         message.textContent = wishes[wishIndex];
-        document.getElementById('wish-number').textContent = `A LITTLE WISH · ${String(wishIndex + 1).padStart(2, '0')}`;
+        document.getElementById('wish-number').textContent = `A LITTLE WISH · ${String(wishIndex + 1).padStart(2, '0')} / ${String(wishes.length).padStart(2, '0')}`;
         void message.offsetWidth;
         message.classList.add('wish-changing');
       });
@@ -658,4 +632,136 @@
         }
       });
       document.querySelector('.lightbox-viewer').addEventListener('pointercancel', () => { swipeStart = null; });
+
+      // A tiny garden of birthday wishes: every flower reveals a different note.
+      const flowerCards = [...document.querySelectorAll('.flower-card')];
+      const bloomCount = document.getElementById('bloom-count');
+      const bloomProgress = document.getElementById('bloom-progress');
+      const gardenProgress = document.querySelector('.garden-progress[role="progressbar"]');
+      const gardenMessage = document.getElementById('garden-message');
+      let bloomsOpened = 0;
+      flowerCards.forEach((flower) => {
+        flower.setAttribute('aria-pressed', 'false');
+        flower.addEventListener('click', () => {
+          if (flower.getAttribute('aria-pressed') === 'true') return;
+          flower.setAttribute('aria-pressed', 'true');
+          flower.classList.add('is-bloomed');
+          const note = flower.querySelector('.flower-note');
+          if (note) note.textContent = flower.dataset.note || 'A little birthday wish, just for you. ♡';
+          bloomsOpened += 1;
+          bloomCount.textContent = String(bloomsOpened);
+          bloomProgress.style.width = `${(bloomsOpened / flowerCards.length) * 100}%`;
+          gardenProgress.setAttribute('aria-valuenow', String(bloomsOpened));
+          gardenMessage.textContent = bloomsOpened === flowerCards.length
+            ? 'Every flower is awake—and every little wish is yours to keep. You make this garden glow, Aditi. ♡'
+            : `${bloomsOpened} little ${bloomsOpened === 1 ? 'wish' : 'wishes'} found… ${flowerCards.length - bloomsOpened} more ${flowerCards.length - bloomsOpened === 1 ? 'flower' : 'flowers'} are waiting for you. ✿`;
+        });
+      });
+
+      // Twelve page-specific clues turn the scrapbook into a gentle treasure trail.
+      const trailClues = [
+        { question: 'Who is this birthday world made for?', choices: ['Aditi Soni', 'A sleepy kitten', 'A mystery princess'], answer: 0 },
+        { question: 'What do you pull back to send your birthday wish flying?', choices: ['A ribbon', 'The arrow', 'A flower'], answer: 1 },
+        { question: 'What is waiting in the middle of the hero scene?', choices: ['A birthday balloon', 'A tiny boat', 'A teacup'], answer: 0 },
+        { question: 'Which little section lets you pick a birthday wish?', choices: ['The pocketful of wishes', 'The moon map', 'The cookie jar'], answer: 0 },
+        { question: 'How many sleepy blossoms are waiting in the birthday garden?', choices: ['Six', 'Twelve', 'Sixteen'], answer: 2 },
+        { question: 'What sight makes your spidy’s whole day?', choices: ['A rainy window', 'Your smiling face', 'A plate of noodles'], answer: 1 },
+        { question: 'What can you tap to open a bigger view of a memory?', choices: ['A photo', 'The footer', 'A cloud'], answer: 0 },
+        { question: 'How many little photo windows are on the memory wall?', choices: ['Four', 'Eight', 'Sixteen'], answer: 1 },
+        { question: 'What can the memory movie do?', choices: ['Show the photos one by one', 'Make a birthday cake', 'Send a paper plane'], answer: 0 },
+        { question: 'Which part has tiny letters for different kinds of days?', choices: ['Open when…', 'The balloon string', 'The top bar'], answer: 0 },
+        { question: 'What name is signed at the end of the letter?', choices: ['yours spidy', 'the garden fairy', 'your secret cat'], answer: 0 },
+        { question: 'What is waiting at the end of the heart-clue trail?', choices: ['A little birthday wish and a hug', 'A math test', 'A very serious meeting'], answer: 0 }
+      ];
+      const trailCounter = document.getElementById('trail-counter');
+      const trailQuestion = document.getElementById('trail-question');
+      const trailAnswers = document.getElementById('trail-answers');
+      const trailFeedback = document.getElementById('trail-feedback');
+      const trailNext = document.getElementById('trail-next');
+      const trailProgress = document.querySelector('.trail-progress[role="progressbar"]');
+      const trailProgressFill = document.getElementById('trail-progress-fill');
+      const trailStamps = [...document.querySelectorAll('#trail-stamps span')];
+      const trailFinale = document.getElementById('trail-finale');
+      let activeClue = 0;
+      let answeredClues = 0;
+      let clueAnswered = false;
+
+      function renderTrailClue() {
+        const clue = trailClues[activeClue];
+        clueAnswered = false;
+        trailCounter.textContent = `CLUE ${String(activeClue + 1).padStart(2, '0')} / ${String(trailClues.length).padStart(2, '0')}`;
+        trailQuestion.textContent = clue.question;
+        trailFeedback.textContent = '';
+        trailAnswers.replaceChildren();
+        trailNext.hidden = true;
+        clue.choices.forEach((choice, choiceIndex) => {
+          const answerButton = document.createElement('button');
+          answerButton.type = 'button';
+          answerButton.className = 'trail-answer';
+          answerButton.textContent = choice;
+          answerButton.addEventListener('click', () => {
+            if (clueAnswered) return;
+            if (choiceIndex !== clue.answer) {
+              trailFeedback.textContent = 'Hehe, not that one… have another little guess ♡';
+              trailFeedback.classList.remove('is-correct');
+              trailFeedback.classList.remove('is-wrong');
+              void trailFeedback.offsetWidth;
+              trailFeedback.classList.add('is-wrong');
+              answerButton.classList.add('is-wrong');
+              answerButton.disabled = true;
+              return;
+            }
+            clueAnswered = true;
+            answeredClues += 1;
+            trailFeedback.textContent = ['That’s it, clever girl! ✦', 'Yesss, you found it! ♡', 'One more little stamp for you! ✿'][activeClue % 3];
+            trailFeedback.classList.remove('is-wrong');
+            trailFeedback.classList.add('is-correct');
+            answerButton.classList.add('is-correct');
+            trailAnswers.querySelectorAll('button').forEach((button) => { button.disabled = true; });
+            if (trailStamps[activeClue]) {
+              trailStamps[activeClue].textContent = ['✦', '🌷', '♡', '✿'][activeClue % 4];
+              trailStamps[activeClue].classList.add('is-collected');
+              trailStamps[activeClue].setAttribute('aria-label', `Clue ${activeClue + 1} collected`);
+            }
+            trailProgress.setAttribute('aria-valuenow', String(answeredClues));
+            trailProgressFill.style.width = `${(answeredClues / trailClues.length) * 100}%`;
+            trailNext.hidden = false;
+            trailNext.innerHTML = activeClue === trailClues.length - 1
+              ? 'open your little prize <span aria-hidden="true">♡</span>'
+              : 'next little clue <span aria-hidden="true">↗</span>';
+          });
+          trailAnswers.append(answerButton);
+        });
+      }
+
+      renderTrailClue();
+      trailNext.addEventListener('click', () => {
+        if (!clueAnswered) return;
+        if (activeClue === trailClues.length - 1) {
+          trailQuestion.hidden = true;
+          trailAnswers.hidden = true;
+          trailFeedback.hidden = true;
+          trailCounter.textContent = 'A LITTLE TREASURE, JUST FOR YOU';
+          trailNext.hidden = true;
+          trailFinale.hidden = false;
+          document.getElementById('trail-card').classList.add('trail-complete');
+          return;
+        }
+        activeClue += 1;
+        renderTrailClue();
+      });
+
+      // Open-when notes expand like small paper letters.
+      document.querySelectorAll('.tiny-envelope-button').forEach((button) => {
+        button.addEventListener('click', () => {
+          const envelope = button.closest('.tiny-envelope');
+          const note = button.nextElementSibling;
+          const isOpening = button.getAttribute('aria-expanded') !== 'true';
+          button.setAttribute('aria-expanded', String(isOpening));
+          envelope.classList.toggle('is-open', isOpening);
+          note.hidden = !isOpening;
+          const symbol = button.querySelector('span');
+          if (symbol) symbol.textContent = isOpening ? '－' : '＋';
+        });
+      });
     })();

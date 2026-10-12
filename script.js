@@ -3,7 +3,7 @@
       const birthdaySite = document.getElementById('birthday-site');
       const openingLock = document.getElementById('opening-lock');
       const lockStatus = document.getElementById('lock-status');
-      const unlockDate = new Date(2026, 11, 16, 0, 0, 0, 0);
+      const unlockDate = new Date(0);
       const countdownNodes = {
         days: document.getElementById('count-days'),
         hours: document.getElementById('count-hours'),

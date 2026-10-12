@@ -545,3 +545,46 @@
       .gate-float-four { left: 6%; bottom: 19%; }
       .gate-doodle-one, .gate-doodle-two { display: none; }
     }
+
+
+/* A softer, more romantic finish for the memory wall. */
+.memories-section {
+  background:
+    radial-gradient(ellipse at 14% 18%, rgba(255,255,255,.83), transparent 29%),
+    radial-gradient(ellipse at 88% 72%, rgba(255,191,211,.43), transparent 31%),
+    radial-gradient(ellipse at 50% 105%, rgba(255,235,218,.68), transparent 42%),
+    linear-gradient(145deg, #fde9ef 0%, #fff0ec 52%, #f4eafa 100%);
+}
+.memories-section::before {
+  background-image: radial-gradient(rgba(205,127,157,.22) 1px, transparent 1px), radial-gradient(rgba(255,255,255,.68) 1px, transparent 1px);
+  background-position: 0 0, 13px 17px;
+  opacity: .42;
+}
+.memories-section::after {
+  border-color: rgba(225,145,174,.27);
+  box-shadow: 0 0 0 22px rgba(255,255,255,.2), 0 0 0 48px rgba(255,205,221,.12), 0 0 70px 10px rgba(255,174,202,.2);
+}
+.photo-card {
+  background: #fff9f8;
+  box-shadow: 0 13px 30px rgba(117,66,87,.12), 0 0 0 1px rgba(255,255,255,.9);
+}
+.photo-card::after {
+  border-color: rgba(225,157,177,.26);
+  background: linear-gradient(110deg, rgba(255,218,229,.94), rgba(255,246,246,.92));
+}
+.photo-card.has-photo .photo-window {
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.98), 0 0 0 3px rgba(255,173,202,.48), 0 0 13px 3px rgba(255,135,177,.42), 0 0 28px 7px rgba(255,174,203,.24);
+  animation: memoryPhotoGlow 4.8s ease-in-out infinite;
+}
+.photo-card.has-photo .photo-window::before {
+  display: block; z-index: 3; inset: 0; border: 1px solid rgba(255,246,249,.93); border-radius: 3px;
+  background: transparent; box-shadow: inset 0 0 15px rgba(255,118,164,.19); pointer-events: none;
+}
+.photo-card figcaption { color: #875d70; }
+.photo-card:hover figcaption { color: #ad5479; }
+@keyframes memoryPhotoGlow {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(255,255,255,.98), 0 0 0 3px rgba(255,173,202,.42), 0 0 12px 3px rgba(255,135,177,.34), 0 0 25px 6px rgba(255,174,203,.2); }
+  50% { box-shadow: 0 0 0 1px rgba(255,255,255,1), 0 0 0 3px rgba(255,191,214,.66), 0 0 17px 4px rgba(255,139,183,.53), 0 0 34px 9px rgba(255,174,203,.3); }
+}
+@media (prefers-reduced-motion: reduce) { .photo-card.has-photo .photo-window { animation: none; } }
